@@ -6,10 +6,11 @@ const userSchema = new mongoose.Schema({
   password: String,
   cnic: String,
   phone: String,
-  ntn: String,
+  HashedNtn: String,
   role: { type: String, enum: ['user', 'investor', 'admin'], default: 'user' },
   isVerified: { type: Boolean, default: false },
   viewedBy: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
-module.exports = mongoose.model('User', userSchema);
+
+module.exports = mongoose.models.User || mongoose.model('User', userSchema);

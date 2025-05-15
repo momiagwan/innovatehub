@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema({
+  ideaId: { type: mongoose.Schema.Types.ObjectId, ref: 'Idea' },
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   content: String,
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  idea: { type: mongoose.Schema.Types.ObjectId, ref: 'Idea' }
-}, { timestamps: true });
+  createdAt: { type: Date, default: Date.now }
+});
 
 module.exports = mongoose.model('Comment', commentSchema);

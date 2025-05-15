@@ -1,14 +1,26 @@
 const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
-const ideaSchema = new mongoose.Schema({
-  title: String,
-  summary: String,
-  description: String,
-  investorNeeded: Boolean,
-  developersNeeded: Boolean,
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  views: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
-  comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
-}, { timestamps: true });
+const ideaSchema = new Schema({
+  title: { type: String, required: true },
+  summary: { type: String, required: true },
+  description: { type: String },
+  investorNeeded: { type: Boolean, default: false },
+  developersNeeded: { type: Boolean, default: false },
+  createdBy: { type: Schema.Types.ObjectId, ref: 'User' },
+  comments: [
+    {
+      userId: { type: Schema.Types.ObjectId, ref: 'User' },
+      content: String,
+      createdAt: { type: Date, default: Date.now }
+    }
+  ],
+  viewers: [
+    {
+      userId: { type: Schema.Types.ObjectId, ref: 'User' },
+      viewedAt: { type: Date, default: Date.now }
+    }
+  ]
+});
 
-module.exports = mongoose.model('Idea', ideaSchema);
+module.exports = mongoose.models.Idea || mongoose.model('Idea', ideaSchema);

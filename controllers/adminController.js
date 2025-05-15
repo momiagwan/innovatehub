@@ -1,5 +1,5 @@
-const User = require('../models/User');
 
+const User = require('../models/user');
 exports.getUnverifiedInvestors = async (req, res) => {
   const users = await User.find({ ntn: { $ne: null }, isVerified: false });
   res.json(users);
